@@ -1,0 +1,166 @@
+/* Paleta de colores */
+:root {
+  color-primary: #010D23;
+  color-secondary: #03223F;
+  color-accent: #038BBB;
+  color-warning: #FCCB6F;
+  color-highlight: #E19F41;
+  color-white: #FFFFFF;
+  color-gray: #F5F5F5;
+  color-dark: #333333;
+}
+
+/* Estilos generales */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Arial', sans-serif;
+  background-color: var(color-gray);
+  color: var(color-dark);
+  line-height: 1.6;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+/* Botones */
+.btn {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: background-color 0.3s;
+}
+
+.btn-primary {
+  background-color: var(color-accent);
+  color: var(color-white);
+}
+
+.btn-primary:hover {
+  background-color: var(color-secondary);
+}
+
+.btn-warning {
+  background-color: var(color-warning);
+  color: var(color-dark);
+}
+
+.btn-danger {
+  background-color: #dc3545;
+  color: var(color-white);
+}
+
+.btn-small {
+  padding: 5px 10px;
+  font-size: 12px;
+}
+
+/* Formularios */
+.form-group {
+  margin-bottom: 15px;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: bold;
+}
+
+.form-group input,
+.form-group select,
+.form-group textarea {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  font-size: 14px;
+}
+
+.form-actions {
+  display: flex;
+  gap: 10px;
+}
+
+/* Mensajes */
+.error {
+  color: #dc3545;
+  font-size: 12px;
+  margin-top: 5px;
+}
+
+.success {
+  color: #28a745;
+  font-size: 12px;
+  margin-top: 5px;
+}
+
+/* Tablas */
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+}
+
+.table th,
+.table td {
+  padding: 12px;
+  text-align: left;
+  border-bottom: 1px solid #ddd;
+}
+
+.table th {
+  background-color: var(color-secondary);
+  color: var(color-white);
+}
+
+.table tr:hover {
+  background-color: #f1f1f1;
+}
+
+/* Secciones */
+.form-section {
+  background-color: var(color-white);
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  margin-bottom: 30px;
+}
+
+.list-section {
+  background-color: var(color-white);
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.acciones {
+  display: flex;
+  gap: 5px;
+}
+
+/* Header */
+header {
+  text-align: center;
+  margin-bottom: 30px;
+  padding: 20px;
+  background: linear-gradient(135deg, var(color-primary), var(color-secondary));
+  color: var(color-white);
+  border-radius: 8px;
+}
+
+header h1 {
+  margin-bottom: 10px;
+}
+
+header p {
+  opacity: 0.9;
+}

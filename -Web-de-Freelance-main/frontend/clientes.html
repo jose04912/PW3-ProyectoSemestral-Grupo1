@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestión de Clientes - Web de Freelance</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="clientes.css">
+</head>
+<body>
+    <div class="clientes-container">
+        <!-- Header -->
+        <header>
+            <h1>👥 Gestión de Clientes</h1>
+            <p>Administra y mantén la información de tus clientes</p>
+            <nav style="margin-top: 15px;">
+                <button class="btn btn-primary" onclick="window.location.href='index.html'">
+                    🏠 Inicio
+                </button>
+                <button class="btn" onclick="window.location.href='servicios.html'" 
+                        style="background-color: var(--color-warning);">
+                    🛠️ Ir a Servicios
+                </button>
+            </nav>
+        </header>
+
+        <!-- Formulario de Registro/Edición -->
+        <section class="form-section">
+            <h2 id="form-title">📝 Registrar Nuevo Cliente</h2>
+            <form id="cliente-form">
+                <input type="hidden" id="cliente-id">
+                
+                <div class="form-group">
+                    <label for="nombreCliente">🏢 Nombre del Cliente *</label>
+                    <input type="text" id="nombreCliente" name="nombreCliente" 
+                           placeholder="Ej: Empresa ABC, S.A. o Juan Pérez"
+                           required>
+                    <div class="error" id="error-nombre"></div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="email">📧 Email *</label>
+                    <input type="email" id="email" name="email" 
+                           placeholder="Ej: contacto@empresa.com"
+                           required>
+                    <div class="error" id="error-email"></div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="telefono">📞 Teléfono *</label>
+                    <input type="text" id="telefono" name="telefono" 
+                           placeholder="Ej: 60001234 (solo números)"
+                           pattern="[0-9]*"
+                           required>
+                    <div class="error" id="error-telefono"></div>
+                </div>
+                
+                <div class="form-actions">
+                    <button type="submit" class="btn btn-primary" id="btn-submit">
+                        💾 Guardar Cliente
+                    </button>
+                    <button type="button" class="btn btn-cancel" id="btn-cancel" style="display: none;">
+                        ❌ Cancelar
+                    </button>
+                </div>
+            </form>
+        </section>
+
+        <!-- Lista de Clientes -->
+        <section class="list-section">
+            <h2>📋 Lista de Clientes Registrados</h2>
+            <div id="mensaje" class="mensaje"></div>
+            
+            <div style="margin-bottom: 15px; font-size: 14px; color: #6c757d;">
+                <strong>Total:</strong> <span id="contador-clientes">0</span> clientes
+            </div>
+            
+            <table class="table" id="tabla-clientes">
+                <thead>
+                    <tr>
+                        <th>Nombre</th>
+                        <th>Email</th>
+                        <th>Teléfono</th>
+                        <th>Fecha de Registro</th>
+                        <th style="text-align: center;">Acciones</th>
+                    </tr>
+                </thead>
+                <tbody id="cuerpo-tabla">
+                    <!-- Los clientes se cargarán aquí dinámicamente -->
+                    <tr>
+                        <td colspan="5" style="text-align: center; padding: 40px;">
+                            <div style="color: #6c757d;">
+                                ⏳ Cargando clientes...
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            
+            <!-- Información del módulo -->
+            <div style="margin-top: 25px; padding: 15px; background-color: #f8f9fa; border-radius: 5px; font-size: 14px;">
+                <strong>💡 Información del Módulo:</strong>
+                <ul style="margin: 10px 0; padding-left: 20px;">
+                    <li>Desarrollado por: <strong>Bayron</strong></li>
+                    <li>Módulo: <strong>Clientes</strong></li>
+                    <li>Funcionalidades: Crear, Listar, Editar, Eliminar clientes</li>
+                    <li>Validaciones: Email válido, teléfono numérico, campos obligatorios</li>
+                </ul>
+            </div>
+        </section>
+    </div>
+
+    <!-- Scripts -->
+    <script src="../js/clientes.js"></script>
+    
+    <script>
+        // Actualizar contador de clientes
+        function actualizarContador() {
+            const contador = document.getElementById('contador-clientes');
+            if (contador) {
+                // Esta función será llamada desde clientes.js
+                setTimeout(() => {
+                    const filas = document.querySelectorAll('#cuerpo-tabla tr');
+                    let clientesVisibles = 0;
+                    filas.forEach(fila => {
+                        if (fila.cells.length === 5) clientesVisibles++;
+                    });
+                    contador.textContent = clientesVisibles;
+                }, 100);
+            }
+        }
+        
+        // Observar cambios en la tabla para actualizar contador
+        const observer = new MutationObserver(actualizarContador);
+        const tabla = document.getElementById('cuerpo-tabla');
+        if (tabla) {
+            observer.observe(tabla, { childList: true, subtree: true });
+        }
+    </script>
+</body>
+</html>
