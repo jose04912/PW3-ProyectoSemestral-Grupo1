@@ -1,0 +1,86 @@
+version: '3.8'
+
+services:
+  # ================================================
+  # FRONTEND - Servidor web estático (Nginx)
+  # ================================================
+  frontend:
+    image: nginx:alpine
+    container_name: freelance_frontend
+    ports:
+      - "8080:80"
+    volumes:
+      - ./frontend:/usr/share/nginx/html:ro
+      - ./nginx.conf:/etc/nginx/conf.d/default.conf:ro
+    depends_on:
+      - backend
+    networks:
+      - freelance_network
+
+  # ================================================
+  # BACKEND - API PHP
+  # ================================================
+  backend:
+    image: php:8.2-apache
+    container_name: freelance_backend
+    ports:
+      - "8000:80"
+    volumes:
+      - ./backend/php:/var/www/html
+    depends_on:
+      - db
+    environment:
+      - DB_HOST=db
+      - DB_NAME=freelance_db
+      - DB_USER=freelance_user
+      - DB_PASS=freelance123
+    command: >
+      bash -c "docker-php-ext-install mysqli pdo pdo_mysql && 
+               apache2-foreground"
+    networks:
+      - freelance_network
+
+  # ================================================
+  # BASE DE DATOS - MariaDB
+  # ================================================
+  db:
+    image: mariadb:10.11
+    container_name: freelance_db
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: root123
+      MYSQL_DATABASE: freelance_db
+      MYSQL_USER: freelance_user
+      MYSQL_PASSWORD: freelance123
+    ports:
+      - "3306:3306"
+    volumes:
+      - db_data:/var/lib/mysql
+      - ./backend/sql/init.sql:/docker-entrypoint-initdb.d/init.sql
+    networks:
+      - freelance_network
+
+  # ================================================
+  # PHPMYADMIN - Administración de BD
+  # ================================================
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    container_name: freelance_phpmyadmin
+    restart: always
+    ports:
+      - "8081:80"
+    environment:
+      PMA_HOST: db
+      PMA_USER: freelance_user
+      PMA_PASSWORD: freelance123
+    depends_on:
+      - db
+    networks:
+      - freelance_network
+
+networks:
+  freelance_network:
+    driver: bridge
+
+volumes:
+  db_data:
